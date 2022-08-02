@@ -1,0 +1,8 @@
+{
+  "name": "martial-certificated",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "dapp for certificate belts",
+  "author": "Luis Fernando Ushiña <guffenix@gmail.com>"
+}

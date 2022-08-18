@@ -25,6 +25,45 @@ contract MundoVirtualPunk is ERC721, ERC721Enumerable, BaseDNA {
         _safeMint(msg.sender, current);
     }
 
+    function _baseURI() internal pure override returns (string memory) {
+        return "https://avataaars.io/";
+    }
+
+    function _paramsURI(uint256 _dna) internal view returns (string memory) {
+        string memory params;
+        params = string(
+            abi.encodePacked(
+                "accessoriesType=",
+                getAccessoriesType(_dna),
+                "&clotheColor=",
+                getClotheColor(_dna),
+                "&clotheType=",
+                getClotheType(_dna),
+                "&eyeType=",
+                getEyeType(_dna),
+                "&eyebrowType=",
+                getEyeBrowType(_dna),
+                "&facialHairColor=",
+                getFacialHairColor(_dna),
+                "&facialHairType=",
+                getFacialHairType(_dna),
+                "&hairColor=",
+                getHairColor(_dna),
+                "&hatColor=",
+                getHatColor(_dna),
+                "&graphicType=",
+                getGraphicType(_dna),
+                "&mouthType=",
+                getMouthType(_dna),
+                "&skinColor=",
+                getSkinColor(_dna),
+                "&topType=",
+                getTopType(_dna)
+            )
+        );
+        return params;
+    }
+
     function tokenURI(uint256 _tokenId)
         public
         view

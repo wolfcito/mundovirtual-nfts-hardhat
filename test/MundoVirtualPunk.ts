@@ -66,4 +66,24 @@ describe('MundoVirtualPunk Contract', function () {
       'data:application/json;base64,',
     )
   })
+
+  it('Should returns valid metadata', async () => {
+    const maxSupply = 2
+    const { deployed } = await setup({ maxSupply })
+    await deployed.mint()
+
+    const tokenURI = await deployed.tokenURI(0)
+    const stringifyTokenURI = await tokenURI.toString()
+    const [, base64JSON] = stringifyTokenURI.split(
+      'data:application/json;base64,',
+    )
+
+    const stringifyMetadata = Buffer.from(base64JSON, 'base64').toString(
+      'ascii',
+    )
+
+    const metadata = JSON.parse(stringifyMetadata)
+
+    expect(metadata).to.have.all.keys('name', 'description', 'image')
+  })
 })

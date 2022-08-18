@@ -13,6 +13,7 @@ contract MundoVirtualPunk is ERC721, ERC721Enumerable, BaseDNA {
 
     Counters.Counter private _idCounter;
     uint256 public maxSuply;
+    mapping(uint256 => uint256) public tokenDNA;
 
     constructor(uint256 _maxSuply) ERC721("MundoVirtualPunks", "MVP") {}
 
@@ -20,6 +21,7 @@ contract MundoVirtualPunk is ERC721, ERC721Enumerable, BaseDNA {
         uint256 current = _idCounter.current();
         require(current < maxSuply, "No Virtualitos left");
 
+        tokenDNA[current] = deterministicPseudoRandomDNA(current, msg.sender);
         _safeMint(msg.sender, current);
     }
 

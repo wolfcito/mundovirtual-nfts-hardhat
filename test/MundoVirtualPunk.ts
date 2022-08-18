@@ -57,4 +57,13 @@ describe('MundoVirtualPunk Contract', function () {
       }
     })
   })
+
+  it('Should return the correct tokenURI protocol mime type', async function () {
+    const maxSupply = 2
+    const { deployed } = await setup({ maxSupply })
+    await deployed.mint()
+    expect(await deployed.tokenURI(0)).to.includes(
+      'data:application/json;base64,',
+    )
+  })
 })

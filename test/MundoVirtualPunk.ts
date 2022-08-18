@@ -42,4 +42,19 @@ describe('MundoVirtualPunk Contract', function () {
       await expect(deployed.mint()).to.be.revertedWith('No Virtualitos left')
     })
   })
+
+  describe('TokenURI testing set', async function () {
+    it("Should throw an error if tokenId don't exists", async function () {
+      const maxSupply = 2
+      const { deployed } = await setup({ maxSupply })
+      try {
+        await deployed.tokenURI(0)
+        expect.fail('fail with an error')
+      } catch (error: any) {
+        expect(error.message).to.contains(
+          'ERC721 Metadata: URI query for nonexistent token',
+        )
+      }
+    })
+  })
 })

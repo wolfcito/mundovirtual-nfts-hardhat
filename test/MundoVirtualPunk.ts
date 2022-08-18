@@ -20,4 +20,26 @@ describe('MundoVirtualPunk Contract', function () {
       expect(maxSupply).to.equal(returnedMaxSupply)
     })
   })
+
+  describe('Minting testing set', () => {
+    it('Mints a new Token and assigns it to owner', async () => {
+      const { owner, deployed } = await setup({})
+
+      await deployed.mint()
+
+      const ownerOfMinted = await deployed.ownerOf(0)
+
+      expect(ownerOfMinted).to.equal(owner.address)
+    })
+
+    it('Has a minting limits', async () => {
+      const maxSupply = 2
+      const { deployed } = await setup({ maxSupply })
+
+      await deployed.mint()
+      await deployed.mint()
+
+      await expect(deployed.mint()).to.be.revertedWith('No Virtualitos left')
+    })
+  })
 })
